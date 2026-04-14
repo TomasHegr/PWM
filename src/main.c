@@ -91,19 +91,19 @@ int main(void)
             btn_time = milis();
             if (PUSH(DB_S3) && !r_btn_is_press) {
                 R += 10;
-                if(R==100){
+                if(R>100){
                     R=0;
                 }
             }
             if (PUSH(DB_S2) && !g_btn_is_press) {
                 G += 10;
-                if(G==100){
+                if(G>100){
                     G=0;
                 }
             }
             if (PUSH(DB_S1) && !b_btn_is_press) {
                 B += 10;
-                if(B==100){
+                if(B>100){
                     B=0;
                 }
             }
