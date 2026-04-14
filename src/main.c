@@ -15,6 +15,21 @@
 #define BTN_PIN GPIO_PIN_4
 #endif
 
+//makra pro případný jednodušení - S3 můžu nahradit R atd atd.
+#define BTNR_R_PORT DB_S3_PORT
+#define BTNR_R_PIM DB_S3_PIN
+#define BTNR_G_PORT DB_S2_PORT
+#define BTNR_G_PIM DB_S2_PIN
+#define BTNR_B_PORT DB_1_PORT
+#define BTNR_B_PIM DB_S1_PIN
+
+#define SET_COMPARE_R TIM2_SetCompare3;
+#define SET_COMPARE_G TIM2_SetCompare2;
+#define SET_COMPARE_B TIM2_SetCompare1;
+
+
+
+
 
 void init(void)
 {
@@ -34,7 +49,7 @@ void init(void)
     GPIO_Init(DB_S3_PORT, DB_S3_PIN, GPIO_MODE_IN_PU_NO_IT);
 
 
-    TIM2_TimeBaseInit(TIM2_PRESCALER_16, 100 - 1);
+    TIM2_TimeBaseInit(TIM2_PRESCALER_16, 100 - 1); // f= 10kHz
     TIM2_Cmd(ENABLE);
     TIM2_OC1Init(TIM2_OCMODE_PWM1,        // PWM1 a PWM2 jsou navzájem negované
                  TIM2_OUTPUTSTATE_ENABLE, // povolí fyzický výstup
@@ -49,7 +64,7 @@ void init(void)
                  TIM2_OCPOLARITY_HIGH);
 
 
-    // ošetření nežádoucích jevů při změně PWM (compare)
+    // ošetření nežádoucích jevů při změně compare registru
     TIM2_OC1PreloadConfig(ENABLE);
     TIM2_OC2PreloadConfig(ENABLE);
     TIM2_OC3PreloadConfig(ENABLE);
