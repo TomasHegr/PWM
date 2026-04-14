@@ -79,29 +79,41 @@ int main(void)
     uint8_t R = 0, G = 0, B = 0;
     bool r_btn_is_press, g_btn_is_press, b_btn_is_press;
 
+    typedef enum{
+        no_change,
+        display_change
+    } status_type;
+    status_type status= no_change;
+
+
     init();
 
 
     while (1) {
         if (milis() - time > 333) {
             time = milis();
+            if(status ==display_change)
             printf("R: %d    G: %d   B: %d\n ", R, G, B);
+            status=no_change;
         }
         if (milis() - btn_time > 30) {
             btn_time = milis();
             if (PUSH(DB_S3) && !r_btn_is_press) {
+                status=display_change;
                 R += 10;
                 if(R>100){
                     R=0;
                 }
             }
             if (PUSH(DB_S2) && !g_btn_is_press) {
+                status=display_change;
                 G += 10;
                 if(G>100){
                     G=0;
                 }
             }
             if (PUSH(DB_S1) && !b_btn_is_press) {
+                status=display_change;
                 B += 10;
                 if(B>100){
                     B=0;
